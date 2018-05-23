@@ -1,0 +1,43 @@
+﻿@using GridMvc.Html
+@model IEnumerable<MalzemeTakipMVC.Models.ENV_MALZEME>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>Malzemeleri Görüntüleme Ekranı</h3>
+
+<p>
+    @Html.ActionLink("Yeni Ekle", "Ekle", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Mal Kabul", "MalKabul", null, new { @class = "btn btn-danger" })
+
+
+</p>
+
+<div>
+
+    @Html.Grid(Model).Columns(col =>
+{
+    col.Add(x => x.Tur).Titled("Tür");
+    col.Add(x => x.AltTur).Titled("AltTür");
+    col.Add(x => x.Adi).Titled("Malzeme Adı");
+    col.Add(x => x.SeriNo).Titled("Seri No");
+    col.Add(x=> x.Ozellik1).Titled("Özellik 1");
+    col.Add(x => x.Ozellik2).Titled("Özellik 2");
+    col.Add(x => x.Ozellik3).Titled("Özellik 3");
+    col.Add(x => x.Ozellik4).Titled("Özellik 4");
+    col.Add(x => x.Ozellik5).Titled("Özellik 5");
+
+
+    //col.Add(x => x.AktifPasif).Titled("Aktiflik Durumu").RenderValueAs(x => (x.AktifPasif) ? "Aktif" : "Pasif");
+    col.Add(x => x.IslemTarihi).Titled("Son İşlem Tarihi");
+
+    //Düzenleme Butonu
+    col.Add().Encoded(false).Sanitized(false).RenderValueAs(x => Html.ActionLink("Düzenle", "Duzenle", new { id = x.Id }, new { @class = "btn btn-warning" }));
+
+    //Silme Butonu
+    //col.Add().Encoded(false).Sanitized(false).RenderValueAs(x => Html.ActionLink("Sil", "Sil", new { id = x.Id }, new { @class = "btn btn-danger" }));
+
+}).Filterable(true).Sortable(true).WithPaging(15).SetLanguage("tr")
+</div>
+

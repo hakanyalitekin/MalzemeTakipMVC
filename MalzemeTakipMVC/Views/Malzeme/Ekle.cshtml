@@ -1,0 +1,144 @@
+﻿@model MalzemeTakipMVC.Models.ENV_MALZEME
+
+@{
+    ViewBag.Title = "Yeni Ekle";
+}
+
+<h3>Yeni Malzeme Ekleme Ekranı</h3>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <script type="text/javascript">
+    $(document).ready(function () {
+        $('#Tur').change(function () {
+            $('#AltTur option').remove();
+            var _parametrekodu = $(this).val();
+
+            if (_parametrekodu != null && _parametrekodu != '') {
+                $.ajax({
+                    type: "post",
+                    url: '@Url.Action("TurGetir", "Malzeme")',
+                    data: { _parametrekodu: _parametrekodu },
+                    success: function (turler) {
+                        $.each(turler, function (index, tur) {
+                            $('#AltTur').append($('<option/>', {
+                                value: tur.ParemetreKodu,
+                                text: tur.BirinciDegeri
+                            }));
+                        });
+                    },
+                    error: function () {
+                        /*Bu metod ile Ajax işlemi başarısız
+                        olursa eğer hata mesajı verebiliyoruz.*/
+                        alert("Hata");
+                    },
+                    beforeSend: function () {
+                        /*Burada ise Form Post edilmeden önce
+                        işlemler yapılabilir.Örnek olarak Loading, yükleniyor vs..*/
+                    },
+                    complete: function () {
+                        /*Burada ise Form Post edildikten sonra
+                        işlemler yapılabilir.Örnek olarak yükleme tamamlandı vs..*/
+                    }
+                });
+            }
+        });
+    });
+        </script>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Tur, "Tür", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Tur", ViewBag.Tur as SelectList, "---Tür Seçiniz---", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Tur, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AltTur, "Alt Tür", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("AltTur", Enumerable.Empty<SelectListItem>(), "---Alt Tür Seçiniz---", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AltTur, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Adi, "Adı", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Adi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Adi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SeriNo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SeriNo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SeriNo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Ozellik1, "Özellik 1", htmlAttributes: new { @class= "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Ozellik1, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Ozellik1, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Ozellik2, "Özellik 2", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Ozellik2, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Ozellik2, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Ozellik3, "Özellik 3", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Ozellik3, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Ozellik3, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Ozellik4, "Özellik 4", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Ozellik4, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Ozellik4, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Ozellik5, "Özellik 5", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Ozellik5, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Ozellik5, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Ekle" class="btn btn-primary" />
+                @Html.ActionLink("İptal", "Index", null, new { @class = "btn btn-danger" })         
+            </div>
+        </div>
+    </div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

@@ -1,0 +1,94 @@
+﻿@using GridMvc.Html
+@model IEnumerable<MalzemeTakipMVC.Models.ENV_PERSONEL>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>Personelleri Görüntüleme Ekranı</h3>
+
+<p>
+    @Html.ActionLink("Yeni Ekle", "Ekle", null, new { @class = "btn btn-success" })
+</p>
+
+<div>
+
+    @Html.Grid(Model).Columns(col =>
+{
+    col.Add(x => x.ENV_DEPARTMAN.Adi).Titled("Departman Adı");
+    col.Add(x => x.AdiSoyadi).Titled("Adı Soyadı");
+    col.Add(x => x.AktifPasif).Titled("Aktiflik Durumu").RenderValueAs(x => (x.AktifPasif) ? "Aktif" : "Pasif");
+    col.Add(x => x.IslemTarihi).Titled("Son İşlem Tarihi");
+
+    //Düzenleme Butonu
+    col.Add().Encoded(false).Sanitized(false).RenderValueAs(x => Html.ActionLink("Düzenle", "Duzenle", new { id = x.Id }, new { @class = "btn btn-warning" }));
+
+    //Silme Butonu
+    col.Add().Encoded(false).Sanitized(false).RenderValueAs(x => Html.ActionLink("Sil", "Sil", new { id = x.Id }, new { @class = "btn btn-danger" }));
+
+}).Filterable(true).Sortable(true).WithPaging(15).SetLanguage("tr")
+</div>
+
+<!-- #region EXPORT  VİEW ALANI -->
+<a href="#" id="export">Excele Aktar</a>
+
+
+    <script>
+        $(document).ready(function () {
+            $("#export").click(function () {
+                ExportToExcel();
+            });
+        });
+
+        function ExportToExcel()
+        {
+            var url = '@Url.Action("GridExportToExcel", "Personel")';
+            window.open(url);
+        }
+    </script>
+
+
+
+
+
+
+@*<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Departman.Adi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AdiSoyadi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AktifPasif)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IslemTarihi)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Departman.Adi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AdiSoyadi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AktifPasif)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IslemTarihi)
+        </td>
+        <td>
+            @Html.ActionLink("Düzenle", "Duzenle", new { id = item.Id }, new { @class = "btn btn-warning" })
+            @Html.ActionLink("Sil", "Sil", new { id = item.Id }, new { @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>*@
+

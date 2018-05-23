@@ -1,0 +1,72 @@
+﻿@model MalzemeTakipMVC.Models.ENV_MALZEMEHAREKET
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h3>Malzeme Atamı İşemi Silme Ekranı</h3>
+
+<h5 class="danger">Bu malzeme atama işlemini silmek istediğinize emin misiniz?</h5>
+<div>
+    <h4>MalzemeHareket</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ENV_MALZEME.Tur)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ENV_MALZEME.Tur)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ENV_PERSONEL.AdiSoyadi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ENV_PERSONEL.AdiSoyadi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ENV_PERSONEL1.AdiSoyadi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ENV_PERSONEL1.AdiSoyadi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Adet)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Adet)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Acıklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Acıklama)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IslemTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IslemTarihi)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Sil" class="btn btn-primary" />
+            @Html.ActionLink("İptal", "Index", null, new { @class = "btn btn-danger" })
+        </div>
+    }
+</div>

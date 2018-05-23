@@ -1,0 +1,63 @@
+﻿@using GridMvc.Html
+@model IEnumerable<MalzemeTakipMVC.Models.WEB_PORTALPARAMETRE>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Yeni Ekle", "Ekle", null, new { @class = "btn btn-success" })
+</p>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ParametreAdi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ParametreKodu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BirinciDegeri)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IkinciDeger)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UcuncuDeger)
+        </th>
+       
+        
+     
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ParametreAdi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ParametreKodu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BirinciDegeri)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IkinciDeger)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UcuncuDeger)
+        </td>
+
+        <td>
+            @Html.ActionLink("Düzenle", "Duzenle", new { id = item.Id }, new { @class = "btn btn-warning" })
+            @Html.ActionLink("Sil", "Sil", new { id = item.Id }, new { @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>

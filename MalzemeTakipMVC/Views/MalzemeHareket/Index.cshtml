@@ -1,0 +1,34 @@
+﻿@using GridMvc.Html
+@model IEnumerable<MalzemeTakipMVC.Models.ENV_MALZEMEHAREKET>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>Personellere Atanmış Malzemelerin Hareket Geçmişi Ekranı</h3>
+
+<p>
+    @Html.ActionLink("Atama Yap", "AtamaYap", null, new { @class = "btn btn-success" })
+</p>
+<div>
+    @Html.Grid(Model).Columns(col =>
+{
+    col.Add(x => x.ENV_MALZEME.SeriNo).Titled("Seri No");
+    col.Add(x => x.ENV_MALZEME.Adi).Titled("Malzeme Adı");
+    col.Add(x => x.ENV_PERSONEL1.AdiSoyadi).Titled("Kaynak Personel");
+    col.Add(x => x.ENV_PERSONEL.AdiSoyadi).Titled("Hedef Personel");
+    col.Add(x => x.Adet).Titled("Adet");
+    col.Add(x => x.Acıklama).Titled("Açıklama");
+    col.Add(x => x.IslemTarihi).Titled("Son İşlem Tarihi");
+
+
+
+}).Filterable(true).Sortable(true).SetLanguage("tr").WithPaging(ViewBag.SayfaNo)
+
+    @using (Html.BeginForm())
+    {
+        <input type="hidden" name="TumSayfa" value="10000" />
+        <input type="submit" name="Tumu" value="Tümünü Görüntüle"  class="btn btn-primary btn-sm"/>
+    }
+
+</div>

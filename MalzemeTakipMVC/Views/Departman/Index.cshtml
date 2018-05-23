@@ -1,0 +1,62 @@
+﻿@using GridMvc.Html
+@model IEnumerable<MalzemeTakipMVC.Models.ENV_DEPARTMAN>
+
+@{
+    ViewBag.Title = "Departman";
+}
+
+<h3>Departmanları Görüntüleme Ekranı</h3>
+<p>
+    @Html.ActionLink("Yeni Ekle", "Ekle", null, new { @class = "btn btn-success" })
+</p>
+<div>
+
+    @Html.Grid(Model).Columns(col =>
+{
+
+    col.Add(x => x.Adi).Titled("Departman Adı");
+    col.Add(x => x.AktifPasif).Titled("Aktiflik Durumu").RenderValueAs(x => (x.AktifPasif) ? "Aktif" : "Pasif");
+    col.Add(x => x.IslemTarihi).Titled("Son İşlem Tarihi");
+
+    //Düzenleme Butonu
+    col.Add().Encoded(false).Sanitized(false).RenderValueAs(x => Html.ActionLink("Düzenle", "Duzenle", new { id = x.Id }, new { @class = "btn btn-warning" }) );
+
+    //Silme Butonu
+    col.Add().Encoded(false).Sanitized(false).RenderValueAs(x => Html.ActionLink("Sil", "Sil", new { id = x.Id }, new { @class = "btn btn-danger" }) );
+
+}).Filterable(true).Sortable(true).WithPaging(15).SetLanguage("tr")
+</div>
+
+@*<table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Adi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AktifPasif)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IslemTarihi)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AktifPasif)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IslemTarihi)
+            </td>
+            <td>
+                @Html.ActionLink("Düzenle", "Duzenle", new { id=item.Id }, new {@class="btn btn-warning"})
+                @Html.ActionLink("Sil", "Sil", new { id=item.Id }, new {@class="btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+    </table>*@

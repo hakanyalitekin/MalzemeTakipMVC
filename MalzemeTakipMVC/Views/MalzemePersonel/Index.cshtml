@@ -1,0 +1,83 @@
+﻿@using GridMvc.Html
+@model IEnumerable<MalzemeTakipMVC.Models.ENV_MALZEMEPERSONEL>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+
+<h3>Personellere Atanmış Malzemeleri Görüntüleme Ekranı</h3>
+
+
+<div>
+    @Html.Grid(Model).Columns(col =>
+{
+    col.Add(x => x.ENV_PERSONEL.ENV_DEPARTMAN.Adi).Titled("Depatman");
+    col.Add(x => x.ENV_PERSONEL.AdiSoyadi).Titled("Personel");
+    col.Add(x => x.ENV_MALZEME.Tur).Titled("Tür");
+    col.Add(x => x.ENV_MALZEME.AltTur).Titled("Alt Tür");
+    col.Add(x => x.ENV_MALZEME.Adi).Titled("Malzeme Adı");
+    col.Add(x => x.ENV_MALZEME.SeriNo).Titled("Seri No");
+    col.Add(x => x.Adet).Titled("Adet");
+    col.Add(x => x.IslemTarihi).Titled("Son İşlem Tarihi");
+
+
+
+}).Filterable(true).Sortable(true).SetLanguage("tr").WithPaging(10000005)
+
+
+</div>
+
+@*<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Malzeme.Tur)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Malzeme.Adi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Personel.AdiSoyadi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Adet)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IslemTarihi)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Malzeme.Tur)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Malzeme.Adi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Personel.AdiSoyadi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Adet)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IslemTarihi)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>*@

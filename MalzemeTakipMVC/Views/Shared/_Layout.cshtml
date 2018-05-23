@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/Gridmvc.css" rel="stylesheet" />
+    <link href="~/Content/gridmvc.datepicker.min.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/jquery")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img class="navbar-brand" src="http://portal.basbug.com.tr:8088/mantis/images/basbug_logo.png" width="80" />
+
+                @Html.ActionLink("Ana Sayfa", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" }) 
+
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Atama İşlemleri", "Index", "MalzemeHareket")</li>
+                    <li>@Html.ActionLink("Atanmış Malzemeler", "Index","MalzemePersonel")</li>
+                    <li>@Html.ActionLink("Malzemeler", "Index", "Malzeme")</li>
+                    <li>@Html.ActionLink("Mal Kabul", "MalKabul", "Malzeme")</li>
+                    <li>@Html.ActionLink("Departmanlar", "Index", "Departman")</li>
+                    <li>@Html.ActionLink("Personeller", "Index", "Personel")</li>
+
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p><img src="http://portal.basbug.com.tr:8088/mantis/images/basbug_logo.png" width="100" height="45"/>     &copy; 2017 - Başbuğ Bilgi İşlem Ekibi</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+        <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/gridmvc.min.js"></script>
+    <script src="~/Scripts/gridmvc.lang.tr.js"></script>
+</body>
+
+
+</html>

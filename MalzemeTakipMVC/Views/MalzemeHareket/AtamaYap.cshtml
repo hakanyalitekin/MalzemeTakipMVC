@@ -1,0 +1,224 @@
+﻿@model MalzemeTakipMVC.Models.ENV_MALZEMEHAREKET
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h3>Yeni Malzeme Atama Ekranı</h3>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('#KaynakPersonelId').change(function () {
+            $('#MalzemeId option').remove();
+            var per_id = $(this).val();
+
+            if (per_id != null && per_id != '') {
+                $.ajax({
+                    type: "post",
+                    url: '@Url.Action("MalzemeGetir", "MalzemeHareket")',
+                    data: { per_id: per_id },
+                    success: function (malzemeler) {
+                        $.each(malzemeler, function (index, malzeme) {
+                            $('#MalzemeId').append($('<option/>', {
+                                value: malzeme.Id,
+                                text: malzeme.Adi
+                            }));
+                        });
+                    },
+                    error: function () {
+                        /*Bu metod ile Ajax işlemi başarısız
+                        olursa eğer hata mesajı verebiliyoruz.*/
+                        alert("Hata");
+                    },
+                    beforeSend: function () {
+                        /*Burada ise Form Post edilmeden önce
+                        işlemler yapılabilir.Örnek olarak Loading, yükleniyor vs..*/
+                    },
+                    complete: function () {
+                        /*Burada ise Form Post edildikten sonra
+                        işlemler yapılabilir.Örnek olarak yükleme tamamlandı vs..*/
+                    }
+                });
+            }
+        });
+    });
+    </script>
+
+
+
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.KaynakPersonelId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("KaynakPersonelId", ViewBag.KaynakPersonelId as SelectList, "---Personel Seçiniz---", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.KaynakPersonelId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MalzemeId, "Malzeme Adı", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("MalzemeId", Enumerable.Empty<SelectListItem>(), "---Malzeme Seçiniz---", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MalzemeId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HedefPersonalId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("HedefPersonalId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.HedefPersonalId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Adet, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Adet, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Adet, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Acıklama, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Acıklama, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Acıklama, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Ekle" class="btn btn-primary" />
+                @Html.ActionLink("İptal", "Index", null, new { @class = "btn btn-danger" })
+            </div>
+        </div>
+    </div>
+}
+
+
+@*<script>
+        $(document).ready(function () {
+            $("#KaynakPersonelId").change(function () {
+                var id = $('#KaynakPersonelId').val();
+                $('#MalzemeId').html("");
+                $.post("@Url.Action("GetBySourceId", "MalzemeHareket")", { id: id }, function (response) {
+                    alert(response);
+                    console.log(response);
+                                    var data = response.data;
+                                    $("#MalzemeId").append('<option value="">Lütfen Seçiniz...</option>');
+                                    for (var i = 0; i < data.length; i++) {
+
+                                        $("#MalzemeId").append('<option value="' + data[i].value + '">' + data[i].text + '</option>');
+
+                                    }
+                                });
+
+            })
+        })
+
+    </script>*@
+
+
+
+@*<script type="text/javascript">
+        $(document).ready(function () {
+            // ülke seçildiğinde bu fonksiyon çalışır
+            $('#KaynakPersonelId').change(function () {
+                // seçilen ülkenin id sini al
+                var kaynakPerID = $(this).val();
+
+                // secilen ülkenin id sini kullanarak Konum controller
+                // sınıfı içerisindeki Sehirler metoduna çağrıda bulunuyoruz.
+                // bu metod dan dönen listeyi kullanarak .each fonksiyonu ile
+                // sehirleri dolduruyoruz...
+                if (kaynakPerID != null && kaynakPerID != '') {
+                    $.ajax({
+                        type: "post",
+                        url: '@Url.Action("Sehirler", "Konum")',
+                        data: { kaynakPerID: kaynakPerID },
+                        success: function (malzemeler) {
+                            $.each(malzemeler, function (index, malzeme) {
+                                $('#MalzemeId').append($('<option/>', {
+                                    value: malzeme.Id,
+                                    text: malzeme.Adi
+                                }));
+                            });
+                        },
+                        error: function () {
+                            // bu kısımda eğer ajax işlemi başarısız ise
+                            // hata mesajı verebiliriz.
+                            alert("Hata");
+                        },
+                        beforeSend: function () {
+                            // bu kısımda form postalanmadan önce yapılacak
+                            // işler belirlenebilir. mesela postalama başladığı
+                            // anda loading resmi görüntüleyebiliriz.
+                        },
+                        complete: function () {
+                            // bu kısımda form postalandıktan sonra yapılacak
+                            // işler belirlenebilir. mesela postalama bittiği
+                            // anda loading resmi gizleyebiliriz.
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+    @using (Html.BeginForm())
+    {
+        <fieldset>
+            <legend>KonumViewModel</legend>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.KaynakPersonelId)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.KaynakPersonelId, ViewBag.KaynakPersonelId as SelectList, "--- Ülke Seçiniz ---")
+                @Html.ValidationMessageFor(model => model.KaynakPersonelId)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.MalzemeId)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.MalzemeId, Enumerable.Empty<SelectListItem>(), "--- Şehir Seçiniz ---")
+                @Html.ValidationMessageFor(model => model.MalzemeId)
+            </div>
+            <p>
+                <input type="submit" value="Kaydet" />
+            </p>
+        </fieldset>
+    }*@
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+    $(document).ready(function () {
+        $("#KaynakPersonelId").change(function () {
+            $.get("/MalzemeHareket/KaynakMalzemeList", { KaynakId: $("KaynakPersonelId").val() }, function (data) {
+                $("MalzemeId").empty();
+                $.each(data, function (index, row) {
+                    $("#MalzemeId").append("<option value='"+row.MalzemeId+"'>" +row.StateName+"</option>")
+                });
+            });
+        });
+    });
+</script>
+

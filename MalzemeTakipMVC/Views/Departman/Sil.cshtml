@@ -1,0 +1,47 @@
+﻿@model MalzemeTakipMVC.Models.ENV_DEPARTMAN
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h3>Departman Silmek Ekranı</h3>
+
+<h5>Silmek İstediğinize Emin Misiniz?</h5>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Adi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Adi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AktifPasif)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AktifPasif)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IslemTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IslemTarihi)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Sil" class="btn btn-primary" />
+            @Html.ActionLink("İptal", "Index", null, new { @class = "btn btn-danger" })
+        </div>
+    }
+</div>
